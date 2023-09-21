@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="maincontainer"></div>
+    <script>
+      // create element
+      seventeen = document.getElementById("maincontainer");
+
+      var exercise = document.createElement("h2");
+      exercise.innerText = "Exercise 04: JavaScript&Dom";
+      seventeen.appendChild(exercise);
+
+      var button = document.createElement("button");
+
+      document.body.onload = addElement;
+      var worker;
+      var count = 0;
+      button.setAttribute("id", "time");
+
+      // function add Element
+      function addElement() {
+        //create button
+
+        button.innerText = "Click me to display Date and time";
+        var today = document.createElement("div");
+        today.appendChild(button);
+        seventeen.appendChild(today);
+        button.setAttribute("id", "inputBTN");
+        button.onclick = function () {
+          startWorker();
+          return false;
+        };
+      
+        function startWorker() {
+          // change style Button
+          button.style.position = "fixed";
+          button.style.right = "0";
+          button.style.top = "0";
+          button.style.width = "360px";
+          button.style.textAlign = "center";
+          button.style.border = "solid black";
+
+          button.onclick = function () {
+            //when you click again
+
+            button.style.position = "static";
+            stopWorker();
+            button.onclick = function () {
+              button.style.display = "block";
+              startWorker();
+            };
+          };
+
+          if (typeof Worker !== "undefined") {
+            if (typeof worker == "undefined") {
+              // worker.js will read new Date() every 1 second
+              worker = new Worker("worker.js"); 
+            }
+            worker.postMessage("start");
+            //bg-color-message
+            var bgColors = [         "lavender",
+            "periwinkle",
+            "blue",
+            "yellow",
+            "peach",
+            "red"
+            ];
+            //text color
+            var colors = ["black", "white", "red", "green", "rosewood", "blue"];
+            var currentColor = 0;
+            //change color
+            function changeColor() {
+              --currentColor;
+              if (currentColor < 0) currentColor = colors.length - 1;
+                for (var i = 0; i < 7; i++) {
+                  button.style.color = colors[(currentColor + i) % colors.length];
+                  button.style.backgroundColor =
+                  bgColors[(currentColor + i) % colors.length];
+              }
+            }
+            intervalID = setInterval(changeColor, 1000);
+
+            worker.addEventListener("message", function (event) {
+              button.textContent = event.data;
+            });
+          } else {
+            document.getElementById("time").innerHTML =
+              "Sorry! No Web Worker support.";
+          }
+        }
+
+        // stop Worker when you click buttton
+        function stopWorker() {
+          worker.postMessage("stop");
+          clearInterval(intervalID);
+          button.style.position = "";
+          worker.terminate();
+          worker = undefined;
+        }
+
+        // text to click for personal
+        var infomation = document.createElement("a");
+        var info = document.createElement("a");
+        info.innerHTML = "personal info";
+        info.style.textDecoration = "underline";
+        info.style.width = "fit-content";
+        info.href = "#";
+        info.style.color = "blue";
+        seventeen.appendChild(info);
+        //onmeuse change color
+        info.onmouseover = function () {
+          info.style.color = "black";
+          info.style.backgroundColor = "yellow";
+        };
+        info.onmouseout = function () {
+          info.style.color = "blue";
+          info.style.backgroundColor = "white";
+        };
+        info.onclick = function () {
+          openPersonalInfo();
+          return false;
+        };
+
+        infomation.setAttribute("id", "infomation");
+        infomation.style.display = "none";
+
+        //personal infomation
+        var ul = document.createElement("ul");
+        var one = document.createElement("li");
+        var two = document.createElement("li");
+        var three = document.createElement("li");
+        var name = document.createTextNode("Nichapa Pakngao, ID : 63010524");
+        one.appendChild(name);
+        ul.appendChild(one);
+        var subject = document.createTextNode("Subject : SOFTWARE STUDIO");
+        two.appendChild(subject);
+        ul.appendChild(two);
+        var term = document.createTextNode("Semester : 2");
+        three.appendChild(term);
+        ul.appendChild(three);
+
+        infomation.appendChild(ul);
+
+        function openPersonalInfo() {
+          var openP = document.getElementById("infomation");
+          if (openP.style.display == "none") {
+            openP.style.display = "block";
+          } else {
+            openP.style.display = "none";
+          }
+        }
+        //hide text
+        var hide = document.createElement("div");
+        hide.appendChild(infomation);
+        seventeen.appendChild(hide);
+
+        // Snapshots
+        var snapshoot = document.createElement("h1");
+        snapshoot.innerText = "Snapshots";
+        seventeen.appendChild(snapshoot);
+
+        //add picture1
+        var piclist = document.createElement("ul");
+        var pic1 = document.createElement("li");
+        var piclink1 = document.createElement("a");
+        piclink1.href = "#seventeen";
+        piclink1.textContent = "Seventeen";
+        pic1.appendChild(piclink1);
+        piclist.appendChild(pic1);
+        seventeen.append(piclist);
+
+        piclink1.onclick = function () {
+          var existingImg = seventeen.getElementsByTagName("img")[0];
+          if (existingImg) {
+            seventeen.removeChild(existingImg);
+          }
+          var img = document.createElement("img");
+          img.src = "https://sv1.picz.in.th/images/2023/02/09/LOqV0S.jpg";
+          img.width = "800";
+          img.height = "600";
+          seventeen.appendChild(img);
+        };
+        seventeen.appendChild(pic1);
+
+        //add picture2
+        var pic2 = document.createElement("li");
+        var piclink2 = document.createElement("a");
+        piclink2.href = "#hiphop";
+        piclink2.textContent = "Hiphop team";
+        pic2.appendChild(piclink2);
+        piclist.appendChild(pic2);
+
+        piclink2.onclick = function () {
+          var existingImg = seventeen.getElementsByTagName("img")[0];
+          if (existingImg) {
+            seventeen.removeChild(existingImg);
+          }
+          var img = document.createElement("img");
+          img.src = "https://sgp1.vultrobjects.com/img-in-th/UF9dKz.jpeg";
+          img.width = "600";
+          img.height = "600";
+          seventeen.appendChild(img);
+        };
+        seventeen.appendChild(pic2);
+
+        //add picture3
+        var pic3 = document.createElement("li");
+        var piclink3 = document.createElement("a");
+        piclink3.href = "#vocal";
+        piclink3.textContent = "Vocal team";
+        pic3.appendChild(piclink3);
+        piclist.appendChild(pic3);
+
+        piclink3.onclick = function () {
+          var existingImg = seventeen.getElementsByTagName("img")[0];
+          if (existingImg) {
+            seventeen.removeChild(existingImg);
+          }
+          var img = document.createElement("img");
+          img.src = "https://sgp1.vultrobjects.com/img-in-th/UF9mor.jpeg";
+          img.width = "600";
+          img.height = "800";
+          seventeen.appendChild(img);
+        };
+        seventeen.appendChild(pic3);
+
+        //add picture4
+        var pic4 = document.createElement("li");
+        var piclink4 = document.createElement("a");
+        piclink4.href = "#performance";
+        piclink4.textContent = "Performance team";
+        pic4.appendChild(piclink4);
+        piclist.appendChild(pic4);
+
+        piclink4.onclick = function () {
+          var existingImg = seventeen.getElementsByTagName("img")[0];
+          if (existingImg) {
+            seventeen.removeChild(existingImg);
+          }
+          var img = document.createElement("img");
+          img.src = "https://sgp1.vultrobjects.com/img-in-th/UF94gX.jpeg";
+          img.width = "700";
+          img.height = "550";
+          img.alt = "buffalo";
+          seventeen.appendChild(img);
+        };
+        seventeen.appendChild(pic4);
+        seventeen.appendChild(document.createElement("br"));
+
+        //picture that show before you will click
+        var img = document.createElement("img");
+        img.src = "https://sgp1.vultrobjects.com/img-in-th/UF98jZ.jpeg";
+        img.alt = "artemis";
+        img.width = "700";
+        img.height = "300";
+        seventeen.appendChild(img);
+      }
+    </script>
+  </body>
+</html>
