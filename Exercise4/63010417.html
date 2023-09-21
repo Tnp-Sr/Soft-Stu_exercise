@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <div id="maincontainer"></div>
+        <script>
+            // -- maincontainer --
+            var main = document.getElementById("maincontainer")
+
+            // -- header --
+            var head_exercise = document.createElement("h2")
+            head_exercise.innerText = "Exercise 04: JavaScript&DOM" //text in head_exercise
+            main.appendChild(head_exercise)//main container > head_exercise
+
+            // -- button --
+            var btn = document.createElement("button")
+            btn.innerText = "Click me to display Date and Time"
+            main.appendChild(btn) //main container > btn
+
+            // about web worker
+            var workerStatus = false
+            var worker = new Worker("worker.js");
+
+            function startWork(){
+                worker.postMessage("start") // send msg to worker
+                // get msg from worker
+                worker.onmessage = function(e){ 
+                    btn.innerHTML = e.data.date
+                    btn.style.backgroundColor = e.data.bgColor
+                    btn.style.color = e.data.fontColor
+                    btn.style.position = "fixed"
+                    btn.style.top = 0 
+                    btn.style.right = 0 
+                    div1.style.marginTop = "70px"
+                }
+                workerStatus = true 
+            }
+            function stopWork(){
+                worker.postMessage("stop")
+                btn.style.position = null
+                div1.style.marginTop = "30px"
+                workerStatus = false 
+            }
+
+            btn.onclick = function(){
+                if(!workerStatus){
+                    startWork()
+                }
+                else{
+                    stopWork()
+                }
+            }
+
+            // -- Personal info --
+            var div1 = document.createElement("div")
+            div1.style.marginTop = "30px"
+
+            var personal = document.createElement("u") //underline tag
+            personal.innerText = "Personal Info"
+            personal.style.color = "pink"
+            personal.style.width = "fit-content"
+            personal.style.cursor = "pointer"
+            div1.appendChild(personal)
+            
+            // mouse over -> change color
+            personal.onmouseover = function(){
+                personal.style.color = "blue"
+                personal.style.backgroundColor = "yellow"
+            }
+
+            // mouse out -> return default
+            personal.onmouseout= function(){
+                personal.style.color = "pink"
+                personal.style.backgroundColor = "transparent"
+            }
+
+            // Personal details
+            var list_per = document.createElement("ul") 
+            list_per.style.display = "none" // don't show list_per
+            var l_name = document.createElement("li")
+            l_name.innerText = "Tanaporn Sriboonphong, ID : 63010417"
+            list_per.appendChild(l_name)
+            var l_subject = document.createElement("li")
+            l_subject.innerText = "Subject : SOFTWARE STUDIO"
+            list_per.appendChild(l_subject)
+            var l_semester = document.createElement("li")
+            l_semester.innerText = "Semester : 1"
+            list_per.appendChild(l_semester)
+            
+            div1.appendChild(list_per)
+            main.appendChild(div1)
+
+            // click -> show details
+            personal.onclick = function(){
+                if (list_per.style.display == "none"){
+                    list_per.style.display = "block"
+                }
+                else {
+                    list_per.style.display = "none"
+                } 
+            }
+
+            // -- Snapshot --
+            var div2 = document.createElement("div")
+            div2.style.marginTop = "30px"
+            var head_snap = document.createElement("h1")
+            head_snap.innerText = "Snapshots"
+            div2.appendChild(head_snap)
+
+            // Snapshot lists
+            var list_snap = document.createElement("ul") // ul tag
+            
+            var l_firework = document.createElement("li") // bullet
+            var firework_text = document.createElement("u") // text
+            firework_text.style.color = "blue"
+            firework_text.innerText = "Fireworks"
+            l_firework.style.cursor = "pointer"
+            l_firework.appendChild(firework_text)
+            list_snap.appendChild(l_firework)
+
+            var l_crest = document.createElement("li")
+            var crest_text = document.createElement("u")
+            crest_text.style.color = "blue"
+            crest_text.innerText = "Crest"
+            l_crest.style.cursor = "pointer"
+            l_crest.appendChild(crest_text)
+            list_snap.appendChild(l_crest)
+
+            var l_action = document.createElement("li")
+            var action_text = document.createElement("u")
+            action_text.style.color = "blue"
+            action_text.innerText = "Action"
+            l_action.style.cursor = "pointer"
+            l_action.appendChild(action_text)
+            list_snap.appendChild(l_action)
+
+            var l_buffalo = document.createElement("li")
+            var buffalo_text = document.createElement("u")
+            buffalo_text.style.color = "blue"
+            buffalo_text.innerText = "Buffalo"
+            l_buffalo.style.cursor = "pointer"
+            l_buffalo.appendChild(buffalo_text)
+            list_snap.appendChild(l_buffalo)
+
+            div2.appendChild(list_snap)
+            main.appendChild(div2)
+
+            var img = document.createElement("img");
+            img.src = "https://lh5.googleusercontent.com/d/1Bxvr6ZKl5FONkTUzj95iQKONEh6vXnfa";
+            img.style.width = "500px";
+            div2.appendChild(img);
+
+            // when click list -> change image 
+            l_firework.onclick = function(){
+                img.src = "https://lh5.googleusercontent.com/d/1C-UBr2_qnevzbPIrHGnOgiVUiSFK5Wvb";
+            }
+            l_crest.onclick = function(){
+                img.src = "https://lh5.googleusercontent.com/d/1CCEJtoZWfT83SnMTv3G17w0s0ivwumz_";
+            }
+            l_action.onclick = function(){
+                img.src = "https://lh5.googleusercontent.com/d/1COChNRtUcms3mAWhjSWJYLs9cRlzeNDd";
+            }
+            l_buffalo.onclick = function(){
+                img.src = "https://lh5.googleusercontent.com/d/1CNyg41d3NAmbxRzxzqFPQuD0BXTeBXZo";
+            }
+
+
+
+
+        </script>
+    </body>
+</html>
