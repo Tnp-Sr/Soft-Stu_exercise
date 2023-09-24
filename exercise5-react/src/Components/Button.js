@@ -4,15 +4,16 @@ function Button(props) {
   const { parentAlert } = props;
   const [value, setValue] = useState(0);
 
-  function increase() {
+  // case vote
+  const increase = () => {
     if (value < 10) {
       setValue(value + 1);
     } else {
-      parentAlert(1);
+      parentAlert(1); //use function in parent โดยส่งค่า 1 ไป
     }
   }
-  
-  function decrease() {
+  // case unvote
+  const decrease = () => {
     if (value > 0) {
       setValue(value - 1);
     } else {

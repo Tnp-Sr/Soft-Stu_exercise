@@ -15,8 +15,14 @@ h1{
   margin-bottom: 30px;
 }
 
+
+/*---Menu  Component---*/
+.Menu{
+  display: flex;
+  flex-direction: column;
+}
+
 .menuCard{
-  text-align: left;
   background-color: #faebd7;
   width: 700px;
   height: 240px;
@@ -26,10 +32,10 @@ h1{
   align-self:center;
 }
 
-
-/*---Menu  Component---*/
-.Menu{
+.menuContent{
   display: flex;
+  flex-direction: row;
+  text-align: left;
 }
 
 .menuImg{
@@ -42,7 +48,7 @@ h1{
   font-weight: bold;
 }
 
-.menuDetail{
+.menuDesc{
   font-size: 15px;
 }
 
