@@ -1,65 +1,38 @@
-import React from "react";
-
+import React, { useState } from "react";
 
 function Button(props) {
-    const [value, setValue] = useState("MIN");
+  const { parentAlert } = props;
+  const [value, setValue] = useState(0);
 
-    function handleClick(operate) {
-        if (operate === -1) {
-          if (value < 10) {
-            setValue(value + operate);
-          } 
-          else {
-            
-          }
-        } else {
-          if (value === "MAX") {
-            alert("Cannot vote more");
-          } else if (value === "MIN") {
-            setValue(1);
-          } else if (value === 9) {
-            setValue("MAX");
-          } else {
-            setValue(value + operate);
-          }
-        }
-      }
+  function increase() {
+    if (value < 10) {
+      setValue(value + 1);
+    } else {
+      parentAlert(1);
+    }
+  }
+  
+  function decrease() {
+    if (value > 0) {
+      setValue(value - 1);
+    } else {
+      parentAlert(-1);
+    }
+  }
 
-//   function handleClick(operate) {
-//     if (operate === -1) {
-//       if (value === "MIN") {
-//         alert("Cannot unvote");
-//       } else if (value === "MAX") {
-//         setValue(9);
-//       } else if (value === 1) {
-//         setValue("MIN");
-//       } else {
-//         setValue(value + operate);
-//       }
-//     } else {
-//       if (value === "MAX") {
-//         alert("Cannot vote more");
-//       } else if (value === "MIN") {
-//         setValue(1);
-//       } else if (value === 9) {
-//         setValue("MAX");
-//       } else {
-//         setValue(value + operate);
-//       }
-//     }
-//   }
-
-    return (
-        <div className="Button">
-            <button className="operate-button" onClick={handleClick(1)}>
-                Click to Vote
-            </button>
-            <div className="vote-value">{value === 0 ? "MIN" : value === 10 ? "MAX" : value}</div>
-            <button className="operate-button" onClick={handleClick(-1)}>
-                Click to Unvote
-            </button>
-        </div>
-    );
+  return (
+    <div className="Button">
+      <button className="operate-button" onClick={increase}>
+        Click to Vote
+      </button>
+      <div className="vote-value">
+        {value === 0 ? "MIN" : value === 10 ? "MAX" : value}
+      </div>
+      <button className="operate-button" onClick={decrease}>
+        Click to Unvote
+      </button>
+    </div>
+  );
 }
 
 export default Button;
