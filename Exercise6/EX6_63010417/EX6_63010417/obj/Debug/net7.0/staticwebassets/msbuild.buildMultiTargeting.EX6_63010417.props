@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\EX6_63010417.props" />
+</Project>
